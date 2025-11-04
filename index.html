@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>AR Traffic Sign Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.19.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2"></script>
+</head>
+<body>
+  <header>
+    <h1>🚦 AR Traffic Sign Quiz</h1>
+    <div id="status-board">
+        <div id="score-board" class="hidden">
+            Σκορ: <span id="score">0</span>
+        </div>
+        <div id="streak-board" class="hidden">
+            Σερί: <span id="streak-count">0</span>
+        </div>
+        <button id="stats-button" class="choice hidden">Στατιστικά</button>
+        <button id="end-game-button" class="choice hidden">Τέλος Παιχνιδιού</button>
+    </div>
+  </header>
+
+  <main>
+    <video id="video" autoplay playsinline class="hidden"></video>
+    <canvas id="overlay" class="hidden"></canvas>
+  </main>
+
+  <div id="intro-modal">
+    <div id="intro-card">
+      <h2>Quiz Εκμάθησης Πινακίδων</h2>
+      <p>Σκάνaρε Μια Πινακίδα</p>
+      <button id="start-button" class="choice">Ξεκίνα</button>
+    </div>
+  </div>
+
+  <div id="quiz-container" class="hidden">
+    <div id="quiz-card">
+        <div id="quiz-score-board">
+            Σκορ: <span id="quiz-score">0</span>
+        </div>
+        <p id="quiz-question">Τι συμβολίζει η πινακίδα που σκανάρατε;</p>
+        <p id="countdown-timer">10</p>
+        <div id="choices-container"></div>
+    </div>
+  </div>
+
+  <div id="name-modal" class="hidden">
+      <div id="name-card">
+          <h2>Καταχώρηση Σκορ</h2>
+          <p>Εισάγετε το όνομά σας:</p>
+          <input type="text" id="username-input" placeholder="Το όνομά σου...">
+          <button id="save-score-button" class="choice">Αποθήκευση</button>
+      </div>
+  </div>
+
+  <div id="stats-modal" class="hidden">
+    <div id="stats-card">
+      <h2>Στατιστικά</h2>
+      <div id="stats-summary">
+        <p>Τελικό Σκορ: <span id="final-score">0</span></p>
+        <p>Σωστές Απαντήσεις: <span id="correct-count">0</span></p>
+        <p>Λάθος Απαντήσεις: <span id="wrong-count">0</span></p>
+        <p>Μέσος Χρόνος Ανά Απάντηση: <span id="avg-time">0</span>s</p>
+      </div>
+      <h3>Καλύτερα Σκορ</h3>
+      <ul id="high-scores-list"></ul>
+      <button id="close-stats-button" class="choice">Επιστροφή στο Παιχνίδι</button>
+      <button id="restart-button" class="choice end-game-btn">Επιστροφή στην Αρχική Οθόνη</button>
+    </div>
+  </div>
+
+  <template id="toast-template">
+    <div class="toast"></div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.19.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
