@@ -1,0 +1,368 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #0f172a;
+  color: #fff
+}
+
+header {
+  padding: 0.5rem 1rem;
+  background: #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+}
+
+h1 {
+  font-size: 1.1rem
+}
+
+#status-board {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#instructions-container {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+#score-board {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#score {
+  transition: transform 0.2s, color 0.2s;
+}
+
+#streak-board {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#streak-count {
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.streak-pulse {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+main {
+  flex: 1;
+  position: relative;
+  overflow: hidden
+}
+
+video,
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem
+}
+
+#overlay {
+  pointer-events: none;
+}
+
+#quiz-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+#quiz-card {
+  background: #f9fafb;
+  color: #0f172a;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#quiz-card h2 {
+  font-size: 1.25rem;
+  color: #111827;
+}
+
+#choices-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.choice {
+  padding: 0.5rem;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.choice:hover {
+  transform: scale(1.03);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #38bdf8;
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  z-index: 100;
+  animation: fadeInOut 3s forwards;
+  font-weight: bold;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.score-correct {
+  color: #4ade80;
+}
+
+.score-wrong {
+  color: #f87171;
+}
+
+.score-pulse {
+  animation: pulse 0.5s ease-in-out;
+}
+
+.score-correct-glow {
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.score-wrong-glow {
+  box-shadow: 0 0 10px #f87171;
+}
+
+.detection-feedback {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 25;
+}
+
+.detection-feedback.correct {
+  color: #4ade80;
+}
+
+.detection-feedback.wrong {
+  color: #f87171;
+}
+
+/* Στυλ για το νέο εισαγωγικό παράθυρο */
+#intro-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0f172a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+}
+
+#intro-card {
+    background: #1e293b;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    border: 2px solid #2563eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Νέο Στυλ για το Modal Ονόματος */
+#name-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 40;
+}
+
+#name-card {
+    background: #1e293b;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    border: 2px solid #ef4444;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#username-input {
+    padding: 0.5rem;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #fff;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+/* Νέο Στυλ για το Modal Στατιστικών */
+#stats-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+#stats-card {
+    background: #1e293b;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    border: 2px solid #2563eb;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#stats-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+#high-scores-list {
+    list-style-type: none;
+    text-align: left;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+#high-scores-list li {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #334155;
+    font-weight: 500;
+}
+
+/* Στυλ για το κουμπί "Τέλος Παιχνιδιού" */
+#end-game-button {
+  background-color: #ef4444; /* Κόκκινο χρώμα */
+}
+
+#end-game-button:hover {
+  background-color: #dc2626; /* Πιο σκούρο κόκκινο στο hover */
+}
+
+/* ΝΕΑ Στυλ για την αντίστροφη μέτρηση και το σκορ */
+#quiz-score-board {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+#quiz-score {
+  font-size: 1.5rem;
+  font-weight: bolder;
+  color: #2563eb;
+}
+
+#countdown-timer {
+  font-size: 4rem; /* Αύξηση μεγέθους γραμματοσειράς */
+  font-weight: bold;
+  color: #ef4444;
+  text-align: center;
+  width: 90px; /* Αύξηση πλάτους */
+  height: 90px; /* Αύξηση ύψους */
+  line-height: 90px; /* Προσαρμογή ύψους γραμμής */
+  border-radius: 50%;
+  border: 4px solid #ef4444;
+  margin: 1rem auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+#countdown-timer:empty {
+    display: none;
+}
